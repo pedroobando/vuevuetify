@@ -1,5 +1,6 @@
 # vue-vuetify2
 
+
 ## Project setup
 ```
 npm install
