@@ -31,26 +31,33 @@
         <v-list-item-avatar size="50">
           <img src="/avatar-1.png">
         </v-list-item-avatar>
-        <v-listitem-content>
+        <v-list-item-content>
           <v-list-item-title>
             The Net Ninja
           </v-list-item-title>
           <v-list-item-subtitle>
             Web developer
           </v-list-item-subtitle>
-        </v-listitem-content>
+        </v-list-item-content>
 
       </v-list-item>
 
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title gray--text">
-            Application
+          <v-list-item-title class="title gray--text text-uppercase">
+            <span class="font-weight-light">Todo</span>
+            <span class="font-weight-bold">Ninja</span>
           </v-list-item-title>
           <v-list-item-subtitle  class="gray--text">
-            subtext
+            Vuetify
           </v-list-item-subtitle>
         </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-action>
+          <Popup />
+        </v-list-item-action>
       </v-list-item>
 
       <v-divider  class="gray"></v-divider>
@@ -77,7 +84,12 @@
 </template>
 
 <script>
+import Popup from './Popup';
 export default {
+  name: 'Navbar',
+  components: {
+    Popup,
+  },
   data() {
     return {
       drawer: false,
