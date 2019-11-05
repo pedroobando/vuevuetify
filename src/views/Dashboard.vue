@@ -39,7 +39,7 @@
           </v-col>
           <v-col cols="6" sm="4" md="2">
             <div class="caption grey--text">Due by</div>
-            <div>{{project.due}}</div>
+            <div>{{project.due.toDate() | dateby}}</div>
           </v-col>
           <v-col cols="12" sm="4" md="2">
             <div class="pt-3">
@@ -55,16 +55,20 @@
 
 <script>
 // @ is an alias to /src
+import db from '@/modules/fireBase';
+import formatfns from 'date-fns/format';
+
 export default {
   name: 'home',
   data: () => ({
-    projects: [
-      {title: 'Diseno de sitio web', person: 'The ninja coder', due: '1st Jan 2019', status: 'ongoing', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
-      {title: 'Code up the homepage', person: 'Chin Liu', due: '20th Jul 2019', status: 'completed', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
-      {title: 'Desing video thumbnails', person: 'Evan You', due: '13 Feb 2018', status: 'ongoing', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
-      {title: 'Develoment project React', person: 'Jordan Walke', due: '14th Mar 2013', status: 'overdue', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
-      {title: 'Create a community forum', person: 'Steve Job', due: '26 Ago 2018', status: 'completed', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'}      
-    ]
+    projects: []
+    // projects: [
+    //   {title: 'Diseno de sitio web', person: 'The ninja coder', due: '1st Jan 2019', status: 'ongoing', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
+    //   {title: 'Code up the homepage', person: 'Chin Liu', due: '20th Jul 2019', status: 'completed', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
+    //   {title: 'Desing video thumbnails', person: 'Evan You', due: '13 Feb 2018', status: 'ongoing', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
+    //   {title: 'Develoment project React', person: 'Jordan Walke', due: '14th Mar 2013', status: 'overdue', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'},
+    //   {title: 'Create a community forum', person: 'Steve Job', due: '26 Ago 2018', status: 'completed', content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident nam modi autem, fugiat non, nihil quis dicta ut molestiae minima, temporibus molestias totam. Itaque tempora placeat dolores consectetur, voluptatem earum?'}      
+    // ]
   }),
   methods: {
     sortby(prop) {
@@ -83,6 +87,30 @@ export default {
       }
 
     }
+  },
+  filters: {
+    dateby(value) {
+      try {
+        let formatDate = formatfns(value, 'do MMM yyyy');
+        return `${formatDate}`;
+      } catch (error) {
+        return 'Error Fecha';        
+      }
+    }
+  },
+  created() {
+    db.collection('projects').onSnapshot(res => {
+      const changes = res.docChanges();
+
+      changes.forEach(change => {
+        if(change.type === 'added') {
+          this.projects.push({
+            ...change.doc.data(),
+            id: change.doc.id
+          })
+        }
+      });
+    });
   }
 }
 </script>

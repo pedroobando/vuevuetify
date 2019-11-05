@@ -1,5 +1,9 @@
 <template>
   <nav>
+    <v-snackbar v-model="snackbar" :timeout="4000" top>
+      <span>Fue anadido un nuevo projecto.</span>
+      <v-btn text @click="snackbar = false">close</v-btn>
+    </v-snackbar>
     <v-app-bar flat app> 
       <v-app-bar-nav-icon class="blue-grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="title text-uppercase blue-grey--text">
@@ -56,7 +60,7 @@
 
       <v-list-item>
         <v-list-item-action>
-          <Popup />
+          <Popup  @projectAdded="snackbar = true"/>
         </v-list-item-action>
       </v-list-item>
 
@@ -97,7 +101,8 @@ export default {
           { title: 'Dashboard', icon: 'mdi-view-dashboard-variant', route: '/' },
           { title: 'My Proyect', icon: 'mdi-folder-outline', route: '/project' },
           { title: 'Team', icon: 'mdi-account-circle', route: '/team' },
-        ],      
+        ],
+      snackbar: false,      
     }
   }
 

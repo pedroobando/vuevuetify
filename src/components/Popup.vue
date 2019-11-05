@@ -19,7 +19,7 @@
             <v-date-picker v-model="due2" @change="seleccionfecha"></v-date-picker>            
           </v-menu>
           <v-spacer></v-spacer>
-          <v-btn color="success darken-1" depressed @click="submit" :disabled="!formValid">Add project</v-btn>
+          <v-btn color="success darken-1" depressed @click="submit" :loading="loadingSendData" :disabled="!formValid">Add project</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -28,9 +28,17 @@
 
 <script>
 import formatfns from 'date-fns/format';
+import db from '@/modules/fireBase';
 
 export default {
-
+  name: 'addProject',
+  created() {
+    this.title = '';
+    this.content= '';
+    this.person = '';
+    this.due = new Date();
+    this.due2 = new Date().toISOString().substr(0, 7)
+  },
   data: ()=>({
     dialog: false,
     menu2: false,
@@ -40,6 +48,7 @@ export default {
     due: new Date(),
     due2: new Date().toISOString().substr(0, 7),
     formValid: false,
+    loadingSendData: false,
     inputRules: [
       v => !!v || 'Data is required.',
       v => v.length >= 3 || 'Minimum length is 3 characters'
@@ -48,22 +57,39 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.title, this.content, this.person, this.due);
-        this.dialog = false;
+        this.loadingSendData = true;
+        const newProject = {
+          title: this.title,
+          content: this.content,
+          due: this.due,
+          person: this.person,
+          status: 'ongoing'
+        }
+
+        db.collection('projects').add(newProject)
+          .then(() => {
+            this.loadingSendData = false;
+            this.dialog = false;
+            this.$emit('projectAdded');
+            console.log('Add to db');
+            // console.log(this.title, this.content, this.person, this.due);
+          });        
       } else {
         this.formValid = false;
+        // this.loadingSendData = false;
       }
     },
     seleccionfecha(fecha) {
-      // console.log(fecha);
-      // console.log(fecha.substr(0,4)+ '-'+fecha.substr(5,2)+'-'+fecha.substr(8,2));
       this.due = new Date(fecha.substr(0,4), fecha.substr(5,2), fecha.substr(8,2));
-      // console.log(this.due);
-      // this.formattedDate();
-      this.menu2 = false;
-    }
 
-        
+      this.menu2 = false;
+      console.log(fecha);
+      console.log(fecha.substr(5,2));
+      console.log(this.due);
+      console.log(this.due2);
+      console.log(formatfns(this.due,'yyyy-MM-dd'));
+      // console.log(formatfns(this.due2,'yyyy-MM-dd'));
+    }
   },
   computed: {
     formatPicker() {
@@ -75,7 +101,7 @@ export default {
         return this.due ? formatfns(this.due, 'do MMM yyyy') : ''
       } catch(error) {
         console.log(error);
-        return '999999';
+        return 'ERROR DATE';
       }
     },
   }
