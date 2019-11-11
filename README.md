@@ -1,40 +1,36 @@
+# vuevuetify
+
 ## Description
 
-[Vuetify Sample](https://www.youtube.com/watch?v=2uZYKcKHgU0&list=PL4cUxeGkcC9g0MQZfHwKcuB0Yswgb3gA5) Ejemplo de Vuetify, guiado por - The Net Ninja
+[Vuetify Tutorial](https://www.youtube.com/watch?v=2uZYKcKHgU0) Nodejs, ES6, VueJs, Vuetify, Material Desing y Firebase.
 
-The Net Ninja, nos crea una aplicacion frontend de ejemplo, explicando el Frendwork Vuetify. - Trabaja siempre con datos estaticos.
-
-## Running the app
-  La Aplicacion es muy sencilla pero es un vasilon
-
-## Canal original Youtube
-
-- Author - [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)
-
-## License
-
-  Pedro Obando is [MIT licensed](LICENSE).
+Esta vez de la mano de [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg), se contruyo una aplicacion sencilla, explicando el framework [Vuetify](https://vuetifyjs.com/en/)  almacena datos y los muestra.
 
 
-## Project setup
-```
+## Running de Project
+```bash
+# instalacion
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# Compiles and hot-reloads for development
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+
+# Compiles and minifies for production
 npm run build
-```
 
-### Lints and fixes files
-```
+# Lints and fixes files
 npm run lint
 ```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Base de datos
+Se uso firebase, excelente base de datos ejecucion en tiempo real.
+
+## Canal original Youtube
+- Author - [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)
+
+## License
+  Pedro Obando is [MIT licensed](LICENSE).
