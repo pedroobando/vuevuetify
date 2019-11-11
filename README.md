@@ -1,4 +1,4 @@
-# vuevuetify
+# Vuevuetify
 
 ## Description
 
@@ -27,7 +27,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Base de datos
-Se uso firebase, excelente base de datos ejecucion en tiempo real.
+Se uso [Firebase](https://firebase.google.com/?hl=es-419), excelente base de datos ejecucion en tiempo real.
 
 ## Canal original Youtube
 - Author - [The Net Ninja](https://www.youtube.com/channel/UCW5YeuERMmlnqo4oq8vwUpg)
